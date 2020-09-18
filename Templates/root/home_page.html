@@ -1,0 +1,142 @@
+{% extends 'partials/root/engine.html' %}
+{% block 'engine'%}
+ 
+    <div class="" style="position: relative;">
+        <div class="grey lighten-4">
+            <p style="position: absolute;z-index: -1;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, rerum!</p>
+            <h3><b>Tile of link</b></h3>
+            <div class="green" style="height: 500px;width: 100%;">IMG</div>
+            <h3><b>Info</b></h3>
+            <!-- <div class="green" style="height: 700px;width: 100%;">Timeline</div>  -->
+        </div>
+ 
+       <h3><b>Click on any two ads with delay of 10 seconds each to get orignal link .</b></h3>
+
+       
+        
+       <!-- CENTER_BOX_ADMIN -->
+       <div class="grey lighten-2" style="height: auto;display: flex;justify-content: center;align-items:center;flex-direction: column;">  
+           <!-- CIRCLE --> <br>
+           <div id="pulse_container" class="circle green  white-text" style="z-index: 1;height: 130px;width: 130px;margin: auto;"><h4 id="timer" style="padding-top: 20px;font-weight: bolder;text-align: center;"> Timer </h4></div>
+           <!-- Download Button --> <br> 
+           <div id="parent_percent" class="progress grey btn" style="height: 50px;position: relative;width: 280px;border-radius: 20px;">
+               <div id="percent" class="determinate green" style="width:  0%; "></div>
+               <p  style="position: absolute;top:  -33%;left: 12%;font-size: 25px;text-align: center;"><b style="color: white !important;">Download Link</b></p>
+           </div>   <br> 
+           <!-- RESULTANT LINK -->
+           <a id="link" style="display:none ;font-size: x-large;" href="http://www.kesalagameramazak.com">http://www.kesalagameramazak.com</a> <br>
+       </div>
+
+
+    </div>   
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+{% block 'js' %}
+<script> 
+   window.localStorage.setItem('counter',0)
+    var div = document.getElementsByClassName('red')
+    var wait = document.getElementById('timer')
+    // state_manager
+    var z=0
+    timeLeft = 10; 
+    
+    
+    
+    function countdown() { 
+        wait.innerHTML = timeLeft
+        window.localStorage.setItem('counter',1)
+        document.getElementById('body').style.cursor='no-drop'
+        timeLeft--;
+        if (timeLeft >= 0) {
+            setTimeout(countdown, 1000);
+        }
+      else{
+        document.getElementById('body').style.cursor='default'
+        // wait.innerHTML=''
+        timeLeft = 10
+        document.getElementById('percent').style.width='50%'
+        z=1
+      }
+    };
+    
+    function countdown2() { 
+        wait.innerHTML = timeLeft
+        window.localStorage.setItem('counter',2)
+        document.getElementById('body').style.cursor='no-drop'
+        timeLeft--;
+        if (timeLeft >= 0) {
+            setTimeout(countdown2, 1000);
+        }
+      else{ 
+        $('#pulse_container').addClass('pulse')
+        $('#timer').html('<i class="material-icons" style="font-size: 50px;">thumb_up</i>')
+        timeLeft = 10
+        document.getElementById('percent').style.width='100%'  
+        z=2
+      }
+    };
+    
+    var clicked_items_ids=[]
+    
+     
+    $('.ad').click(function(event){
+        if(window.localStorage.getItem('counter')==0){
+            setTimeout(countdown,1)
+            clicked_items_ids.push(this.id) 
+        }
+        else if (document.getElementById('body').style.cursor=='no-drop'){
+            // event.preventDefault()   
+        }
+        else if(window.localStorage.getItem('counter')==1==z){ 
+            if(clicked_items_ids.includes(this.id)){
+                alert('Please click on some other link !')
+            }
+            else{
+                setTimeout(countdown2,1) 
+                clicked_items_ids.push(this.id)
+            }
+        }
+    })
+    
+    $('#parent_percent').click(()=>{
+        if(z==2){
+            if(clicked_items_ids.includes('ad1') || clicked_items_ids.includes('ad2') || clicked_items_ids.includes('ad3')){
+                document.getElementById('link').style.display='block'
+                setTimeout(() => {
+                    window.open('https://attacomsian.com', '_blank');
+                }, 600);
+            }
+        } 
+    })
+    
+// window.localStorage.setItem('counter',0)
+// var div = document.getElementsByClassName('red')
+// var wait = document.getElementById('timer')
+// // state_manager
+// var z=0
+// var timeLeft = 10; 
+
+// function countdown(x){
+//     console.log(timeLeft);
+//     timeLeft=timeLeft-1
+//     if(timeLeft>=1){
+//         setTimeout(countdown,500);
+//     }
+// }
+
+// setTimeout(countdown(1),1)
+
+</script> 
+{% endblock 'js' %}    
+{% endblock 'engine' %}
